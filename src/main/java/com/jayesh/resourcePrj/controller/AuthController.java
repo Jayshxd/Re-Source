@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/auth")
@@ -23,4 +26,9 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/bulk/register")
+    public ResponseEntity<List<EmployeeResponseDto>> post(@RequestBody List<EmployeeRequestDto> request){
+        List<EmployeeResponseDto> response = employeeService.registerEmployeesInBulk(request);
+        return ResponseEntity.ok(response);
+    }
 }
