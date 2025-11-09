@@ -19,13 +19,12 @@ public class Track {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
     LocalDate issueDate;
     LocalTime issueTime;
     LocalDate returnDate;
     LocalTime returnTime;
     String assetCondition;
-    Boolean returnStatus=true;
+    Boolean isReturned;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
