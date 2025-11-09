@@ -37,4 +37,14 @@ public class Asset {
     )
     List<Track> assetTracks = new ArrayList<>();
 
+
+    public void addTrack(Track track) {
+        this.assetTracks.add(track);
+        track.setAsset(this);
+    }
+    public void removeTrack(Track track) {
+        this.assetTracks.remove(track);
+        track.setAsset(null);
+    }
+
 }
