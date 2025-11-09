@@ -52,5 +52,15 @@ public class Employee {
     private Set<Role> roles = new HashSet<>();
 
 
+    public void addTrack(Track track) {
+        this.employeeTracks.add(track);
+        track.setEmployee(this);
+    }
+    public void removeTrack(Track track) {
+        this.employeeTracks.remove(track);
+        track.setEmployee(null);
+    }
+
+
 
 }
