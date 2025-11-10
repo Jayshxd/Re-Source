@@ -1,7 +1,7 @@
 package com.jayesh.resourcePrj.services;
-
 import com.jayesh.resourcePrj.dto.request.TrackRequestDto;
 import com.jayesh.resourcePrj.dto.request.TrackReturnRequestDto;
+import com.jayesh.resourcePrj.dto.request.TrackUpdateRequestDto;
 import com.jayesh.resourcePrj.dto.response.TrackResponseDto;
 import com.jayesh.resourcePrj.entities.Asset;
 import com.jayesh.resourcePrj.entities.Employee;
@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -39,8 +41,6 @@ public class TrackService {
                 .findById(requestDto.getAssetId())
                 .orElseThrow(()-> new EntityNotFoundException("Asset Not Found with id-> "+requestDto.getAssetId())
                 );
-
-
 
         Optional<Track> checks = trackRepo.findByAsset_IdAndIsReturnedFalse(requestDto.getAssetId());
 
@@ -79,5 +79,51 @@ public class TrackService {
         log.info("Track Returned Successfully");
         Track savedTrack = trackRepo.save(track);
         return new  TrackResponseDto(savedTrack);
+    }
+
+    public List<TrackResponseDto> findTracks(LocalDate issueDate,LocalTime issueTime,LocalDate returnDate,LocalTime returnTime, String assetCondition, Boolean isReturned) {
+        List<Track> tracks = trackRepo.findByCriteria(issueDate,issueTime,returnDate,returnTime,assetCondition,isReturned);
+        return tracks.stream().map(TrackResponseDto::new).toList();
+    }
+
+
+    //patch
+    public TrackResponseDto updateTrackDetails(Long trackId,TrackUpdateRequestDto requestDto) {
+        Track track = trackRepo.findById(trackId).orElseThrow(()-> new EntityNotFoundException("Track Not Found with id-> "+trackId));
+        if (requestDto.getIssueDate() != null)
+            track.setIssueDate(requestDto.getIssueDate());
+        if (requestDto.getIssueTime() != null)
+            track.setIssueTime(requestDto.getIssueTime());
+        if (requestDto.getReturnDate() != null)
+            track.setReturnDate(requestDto.getReturnDate());
+        if (requestDto.getReturnTime() != null)
+            track.setReturnTime(requestDto.getReturnTime());
+        if (requestDto.getAssetCondition() != null)
+            track.setAssetCondition(requestDto.getAssetCondition());
+        if (requestDto.getIsReturned() != null)
+            track.setIsReturned(requestDto.getIsReturned());
+
+        Track saved = trackRepo.save(track);
+        return new  TrackResponseDto(saved);
+    }
+
+    //put
+    public TrackResponseDto updateTrack(Long trackId, TrackUpdateRequestDto requestDto) {
+        Track track = trackRepo.findById(trackId)
+                .orElseThrow(() -> new EntityNotFoundException("Track Not Found with id -> " + trackId));
+
+        track.setIssueDate(requestDto.getIssueDate());
+        track.setIssueTime(requestDto.getIssueTime());
+        track.setReturnDate(requestDto.getReturnDate());
+        track.setReturnTime(requestDto.getReturnTime());
+        track.setAssetCondition(requestDto.getAssetCondition());
+        track.setIsReturned(requestDto.getIsReturned());
+
+        trackRepo.save(track);
+        return new TrackResponseDto(track);
+    }
+
+    public void deleteTrack(Long trackId) {
+        trackRepo.deleteById(trackId);
     }
 }

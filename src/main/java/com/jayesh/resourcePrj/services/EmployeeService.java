@@ -8,6 +8,7 @@ import com.jayesh.resourcePrj.entities.Role;
 import com.jayesh.resourcePrj.repo.EmployeeRepo;
 import com.jayesh.resourcePrj.repo.RoleRepo;
 import jakarta.transaction.Transactional;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+@Builder
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -49,13 +50,13 @@ public class EmployeeService {
         Role role = roleRepo.findRoleByName("user").orElseGet(
                 ()->roleRepo.save(new Role("user"))
         );
-        Employee employee = new Employee();
-        employee.setName(request.getName());
-        employee.setEmail(request.getEmail());
-        employee.setPassword(passwordEncoder.encode(request.getPassword()));
-        employee.setUsername(request.getUsername());
-        employee.setRoles(Set.of(role));
-        return employee;
+        return Employee.builder()
+                .username(request.getUsername())
+                .name(request.getName())
+                .email(request.getEmail())
+                .password(request.getPassword())
+                .roles(Set.of(role))
+                .build();
     }
 
     public List<EmployeeResponseDto> findAllEmployees(String name, String email, String username) {
