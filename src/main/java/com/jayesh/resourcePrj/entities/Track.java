@@ -5,7 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -23,7 +26,6 @@ public class Track {
     private LocalTime issueTime;
     private LocalDate returnDate;
     private LocalTime returnTime;
-
     private String assetCondition;
     private Boolean isReturned;
 
@@ -34,5 +36,11 @@ public class Track {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset_id")
     private Asset asset;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Timestamp createdAt;
+    @UpdateTimestamp
+    private Timestamp updatedAt;
 
 }

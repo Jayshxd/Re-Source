@@ -2,15 +2,17 @@ package com.jayesh.resourcePrj.controller;
 
 import com.jayesh.resourcePrj.dto.request.TrackRequestDto;
 import com.jayesh.resourcePrj.dto.request.TrackReturnRequestDto;
+import com.jayesh.resourcePrj.dto.request.TrackUpdateRequestDto;
 import com.jayesh.resourcePrj.dto.response.TrackResponseDto;
 import com.jayesh.resourcePrj.services.TrackService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,5 +30,37 @@ public class TrackController {
     public ResponseEntity<TrackResponseDto> returnAsset(@RequestBody TrackReturnRequestDto requestDto){
         TrackResponseDto responseDto = trackService.returnAsset(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+    }
+
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TrackResponseDto> findTracks(
+            @RequestParam(required = false) LocalDate issueDate,
+            @RequestParam(required = false) LocalTime issueTime,
+            @RequestParam(required = false) LocalDate returnDate,
+            @RequestParam(required = false) LocalTime returnTime,
+            @RequestParam(required = false) String assetCondition,
+            @RequestParam(required = false) Boolean isReturned
+    ){
+        return trackService.findTracks(issueDate,issueTime,returnDate,returnTime,assetCondition,isReturned);
+    }
+
+
+    @PatchMapping("/{trackId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public TrackResponseDto updateTrackDetails(@PathVariable Long trackId,@RequestBody TrackUpdateRequestDto requestDto){
+        return trackService.updateTrackDetails(trackId,requestDto);
+    }
+
+    @PutMapping("/{trackId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public TrackResponseDto updateTrack(@PathVariable Long trackId,@RequestBody TrackUpdateRequestDto requestDto){
+        return trackService.updateTrack(trackId,requestDto);
+    }
+
+    @DeleteMapping("/{trackId}")
+    public String deleteTrack(@PathVariable Long trackId){
+        trackService.deleteTrack(trackId);
+        return "Deleted Successfully";
     }
 }
