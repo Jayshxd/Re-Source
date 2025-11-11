@@ -31,4 +31,32 @@ public class AssetController {
     }
 
 
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
+    public List<AssetResponseDto> findAssets(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String serialNumber,
+            @RequestParam(required = false) String assetType){
+        return assetService.findAssets(name,serialNumber,assetType);
+    }
+
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public AssetResponseDto updateAsset(@PathVariable Long id, @RequestBody AssetRequestDto requestDto) {
+        return assetService.updateAsset(id,requestDto);
+    }
+
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public AssetResponseDto updateAssetDetails(@PathVariable Long id, @RequestBody AssetRequestDto requestDto) {
+        return assetService.updateAssetDetails(id,requestDto);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAsset(@PathVariable Long id){
+        assetService.deleteAsset(id);
+    }
+
 }
