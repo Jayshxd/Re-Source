@@ -2,7 +2,9 @@ package com.jayesh.resourcePrj.controller;
 
 import com.jayesh.resourcePrj.dto.request.AssetRequestDto;
 import com.jayesh.resourcePrj.dto.response.AssetResponseDto;
+import com.jayesh.resourcePrj.dto.response.TrackResponseDto;
 import com.jayesh.resourcePrj.services.AssetService;
+import com.jayesh.resourcePrj.services.TrackService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import java.util.List;
 @RequestMapping("/assets")
 public class AssetController {
     private final AssetService assetService;
+    private final TrackService trackService;
 
 
     @PostMapping
@@ -57,6 +60,13 @@ public class AssetController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAsset(@PathVariable Long id){
         assetService.deleteAsset(id);
+    }
+
+
+    @GetMapping("/{assetId}/tracks")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TrackResponseDto> findTracksByAssetId(@PathVariable Long assetId){
+        return trackService.findTracksByAssetId(assetId);
     }
 
 }
