@@ -126,4 +126,12 @@ public class TrackService {
     public void deleteTrack(Long trackId) {
         trackRepo.deleteById(trackId);
     }
+
+    public List<TrackResponseDto> findTracksByEmpId(Long empId) {
+        return trackRepo.findTracksByEmployeeId(empId).stream().map(TrackResponseDto::new).toList();
+    }
+
+    public List<TrackResponseDto> findTracksByAssetId(Long assetId) {
+        return trackRepo.findTracksByAssetId(assetId).stream().map(TrackResponseDto::new).toList();
+    }
 }

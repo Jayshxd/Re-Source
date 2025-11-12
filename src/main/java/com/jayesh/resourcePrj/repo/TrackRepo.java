@@ -1,5 +1,6 @@
 package com.jayesh.resourcePrj.repo;
 
+import com.jayesh.resourcePrj.dto.response.TrackResponseDto;
 import com.jayesh.resourcePrj.entities.Track;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -33,5 +34,9 @@ public interface TrackRepo extends JpaRepository<Track,Long> {
             @Param("isReturned") Boolean isReturned
     );
 
-    void deleteTrackById(Long id);
+
+
+    List<Track> findTracksByEmployeeId(Long employeeId);
+
+    List<Track> findTracksByAssetId(Long assetId);
 }
