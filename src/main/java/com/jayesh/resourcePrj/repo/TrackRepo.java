@@ -23,6 +23,7 @@ public interface TrackRepo extends JpaRepository<Track,Long> {
             "(:returnDate IS NULL OR t.returnDate = :returnDate) AND " +
             "(:returnTime IS NULL OR t.returnTime = :returnTime) AND " +
             "(:assetCondition IS NULL OR LOWER(t.assetCondition) LIKE LOWER(CONCAT('%', :assetCondition, '%'))) AND " +
+            "(:expectedReturnDate IS NULL OR t.expectedReturnDate = :expectedReturnDate) AND "+
             "(:isReturned IS NULL OR t.isReturned = :isReturned)")
 
     List<Track> findByCriteria(
@@ -31,7 +32,8 @@ public interface TrackRepo extends JpaRepository<Track,Long> {
             @Param("returnDate") LocalDate returnDate,
             @Param("returnTime") LocalTime returnTime,
             @Param("assetCondition") String assetCondition,
-            @Param("isReturned") Boolean isReturned
+            @Param("isReturned") Boolean isReturned,
+            @Param("expectedReturnDate") LocalDate expectedReturnDate
     );
 
 

@@ -28,6 +28,7 @@ public class Track {
     private LocalTime returnTime;
     private String assetCondition;
     private Boolean isReturned;
+    private LocalDate expectedReturnDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")

@@ -63,9 +63,11 @@ public class TrackService {
         track.setIssueTime(LocalTime.now());
         track.setIsReturned(false);
         track.setAssetCondition("HAS TO BE UPDATED AFTER RETURN");
+        track.setExpectedReturnDate(requestDto.getExpectedReturnDate());
         employee.addTrack(track);
         asset.addTrack(track);
         log.info("Asset Assigned Successfully");
+
         Track savedTrack = trackRepo.save(track);
         return new  TrackResponseDto(savedTrack);
     }
@@ -76,13 +78,14 @@ public class TrackService {
         track.setReturnTime(LocalTime.now());
         track.setAssetCondition(requestDto.getAssetCondition());
         track.setIsReturned(true);
+        track.setExpectedReturnDate(null);
         log.info("Track Returned Successfully");
         Track savedTrack = trackRepo.save(track);
-        return new  TrackResponseDto(savedTrack);
+        return new TrackResponseDto(savedTrack);
     }
 
-    public List<TrackResponseDto> findTracks(LocalDate issueDate,LocalTime issueTime,LocalDate returnDate,LocalTime returnTime, String assetCondition, Boolean isReturned) {
-        List<Track> tracks = trackRepo.findByCriteria(issueDate,issueTime,returnDate,returnTime,assetCondition,isReturned);
+    public List<TrackResponseDto> findTracks(LocalDate issueDate,LocalTime issueTime,LocalDate returnDate,LocalTime returnTime, String assetCondition, Boolean isReturned,LocalDate expectedReturnDate) {
+        List<Track> tracks = trackRepo.findByCriteria(issueDate,issueTime,returnDate,returnTime,assetCondition,isReturned,expectedReturnDate);
         return tracks.stream().map(TrackResponseDto::new).toList();
     }
 
@@ -102,6 +105,9 @@ public class TrackService {
             track.setAssetCondition(requestDto.getAssetCondition());
         if (requestDto.getIsReturned() != null)
             track.setIsReturned(requestDto.getIsReturned());
+        if(requestDto.getExpectedReturnDate() != null){
+            track.setExpectedReturnDate(requestDto.getExpectedReturnDate());
+        }
 
         Track saved = trackRepo.save(track);
         return new  TrackResponseDto(saved);
@@ -118,7 +124,7 @@ public class TrackService {
         track.setReturnTime(requestDto.getReturnTime());
         track.setAssetCondition(requestDto.getAssetCondition());
         track.setIsReturned(requestDto.getIsReturned());
-
+        track.setExpectedReturnDate(requestDto.getExpectedReturnDate());
         trackRepo.save(track);
         return new TrackResponseDto(track);
     }

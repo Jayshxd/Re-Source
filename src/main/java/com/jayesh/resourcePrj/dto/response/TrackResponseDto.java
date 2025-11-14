@@ -20,6 +20,7 @@ public class TrackResponseDto {
     private String employeeName;
     private LocalDate issueDate;
     private LocalTime issueTime;
+    private LocalDate expectedReturnDate;
 
     public TrackResponseDto(Track track) {
         this.id = track.getId();
@@ -27,5 +28,6 @@ public class TrackResponseDto {
         this.employeeName = track.getEmployee().getName();
         this.issueDate = track.getIssueDate();
         this.issueTime = track.getIssueTime();
+        this.expectedReturnDate = track.getExpectedReturnDate();
     }
 }

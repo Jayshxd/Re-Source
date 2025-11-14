@@ -16,5 +16,6 @@ public class TrackRequestDto {
 
     private Long employeeId;
     private Long assetId;
+    private LocalDate expectedReturnDate;
 
 }
