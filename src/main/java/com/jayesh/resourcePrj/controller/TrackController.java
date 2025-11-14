@@ -40,9 +40,10 @@ public class TrackController {
             @RequestParam(required = false) LocalDate returnDate,
             @RequestParam(required = false) LocalTime returnTime,
             @RequestParam(required = false) String assetCondition,
-            @RequestParam(required = false) Boolean isReturned
+            @RequestParam(required = false) Boolean isReturned,
+            @RequestParam(required = false) LocalDate expectedReturnDate
     ){
-        return trackService.findTracks(issueDate,issueTime,returnDate,returnTime,assetCondition,isReturned);
+        return trackService.findTracks(issueDate,issueTime,returnDate,returnTime,assetCondition,isReturned, expectedReturnDate);
     }
 
 

@@ -21,4 +21,5 @@ public class TrackUpdateRequestDto {
     private Boolean isReturned;
     private Long employeeId;
     private Long assetId;
+    private LocalDate expectedReturnDate;
 }
