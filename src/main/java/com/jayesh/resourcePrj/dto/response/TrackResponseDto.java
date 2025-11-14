@@ -21,6 +21,7 @@ public class TrackResponseDto {
     private LocalDate issueDate;
     private LocalTime issueTime;
     private LocalDate expectedReturnDate;
+    private Boolean isReturned;
 
     public TrackResponseDto(Track track) {
         this.id = track.getId();
@@ -29,5 +30,6 @@ public class TrackResponseDto {
         this.issueDate = track.getIssueDate();
         this.issueTime = track.getIssueTime();
         this.expectedReturnDate = track.getExpectedReturnDate();
+        this.isReturned = track.getIsReturned();
     }
 }
