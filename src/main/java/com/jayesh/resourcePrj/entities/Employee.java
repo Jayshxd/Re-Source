@@ -3,7 +3,10 @@ package com.jayesh.resourcePrj.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -32,6 +35,13 @@ public class Employee {
 
     @Column(unique = true)
     private String email;
+
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Timestamp createdAt;
+    @UpdateTimestamp
+    private Timestamp updatedAt;
 
 
     @OneToMany(
