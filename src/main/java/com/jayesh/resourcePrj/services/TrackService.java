@@ -6,6 +6,7 @@ import com.jayesh.resourcePrj.dto.response.TrackResponseDto;
 import com.jayesh.resourcePrj.entities.Asset;
 import com.jayesh.resourcePrj.entities.Employee;
 import com.jayesh.resourcePrj.entities.Track;
+import com.jayesh.resourcePrj.notification.EmailService;
 import com.jayesh.resourcePrj.repo.AssetRepo;
 import com.jayesh.resourcePrj.repo.EmployeeRepo;
 import com.jayesh.resourcePrj.repo.TrackRepo;
@@ -13,6 +14,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,7 @@ public class TrackService {
     private final AssetRepo assetRepo;
     private final EmployeeRepo employeeRepo;
     private final TrackRepo trackRepo;
+    private final EmailService emailService;
 
     @Transactional
     public TrackResponseDto assignAsset(TrackRequestDto requestDto) {
@@ -67,7 +70,8 @@ public class TrackService {
         employee.addTrack(track);
         asset.addTrack(track);
         log.info("Asset Assigned Successfully");
-
+        emailService.sendEmailWhenAssigned(employee.getEmail(),track);
+        log.info("Assigned Email Sent to : {}", track.getEmployee().getEmail());
         Track savedTrack = trackRepo.save(track);
         return new  TrackResponseDto(savedTrack);
     }
@@ -80,6 +84,8 @@ public class TrackService {
         track.setIsReturned(true);
         track.setExpectedReturnDate(null);
         log.info("Track Returned Successfully");
+        emailService.sendEmailWhenReturned(track.getEmployee().getEmail(),track);
+        log.info("Returned Email Sent to : {}", track.getEmployee().getEmail());
         Track savedTrack = trackRepo.save(track);
         return new TrackResponseDto(savedTrack);
     }
@@ -139,5 +145,15 @@ public class TrackService {
 
     public List<TrackResponseDto> findTracksByAssetId(Long assetId) {
         return trackRepo.findTracksByAssetId(assetId).stream().map(TrackResponseDto::new).toList();
+    }
+
+    @Transactional
+    @Scheduled(cron = "0 0 9 * * *")
+    public void overDues(){
+        List<Track> list = trackRepo.findTracksByExpectedReturnDateBeforeAndIsReturnedFalse(LocalDate.now());
+        for(Track track : list){
+            emailService.sendEmail(track.getEmployee().getEmail(),track.getExpectedReturnDate(),track.getAsset().getName());
+            log.info("Email Sent to : {}", track.getEmployee().getEmail());
+        }
     }
 }
