@@ -45,4 +45,6 @@ public interface TrackRepo extends JpaRepository<Track,Long> {
     List<Track> findTracksByExpectedReturnDateBeforeAndIsReturned(LocalDate expectedReturnDateBefore, Boolean isReturned);
 
     List<Track> findTracksByExpectedReturnDateBeforeAndIsReturnedFalse(LocalDate now);
+
+    long countTrackByIsReturned(Boolean isReturned);
 }

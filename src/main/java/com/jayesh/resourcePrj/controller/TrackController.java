@@ -3,6 +3,7 @@ package com.jayesh.resourcePrj.controller;
 import com.jayesh.resourcePrj.dto.request.TrackRequestDto;
 import com.jayesh.resourcePrj.dto.request.TrackReturnRequestDto;
 import com.jayesh.resourcePrj.dto.request.TrackUpdateRequestDto;
+import com.jayesh.resourcePrj.dto.response.TrackAnalyticsResponse;
 import com.jayesh.resourcePrj.dto.response.TrackResponseDto;
 import com.jayesh.resourcePrj.services.TrackService;
 import lombok.RequiredArgsConstructor;
@@ -63,5 +64,13 @@ public class TrackController {
     public String deleteTrack(@PathVariable Long trackId){
         trackService.deleteTrack(trackId);
         return "Deleted Successfully";
+    }
+
+
+    //analytics
+    @GetMapping("/analytics")
+    @ResponseStatus(HttpStatus.OK)
+    public TrackAnalyticsResponse analytics(){
+        return trackService.showAnalytics();
     }
 }

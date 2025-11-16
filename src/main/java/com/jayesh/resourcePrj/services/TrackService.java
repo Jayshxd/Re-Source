@@ -2,6 +2,7 @@ package com.jayesh.resourcePrj.services;
 import com.jayesh.resourcePrj.dto.request.TrackRequestDto;
 import com.jayesh.resourcePrj.dto.request.TrackReturnRequestDto;
 import com.jayesh.resourcePrj.dto.request.TrackUpdateRequestDto;
+import com.jayesh.resourcePrj.dto.response.TrackAnalyticsResponse;
 import com.jayesh.resourcePrj.dto.response.TrackResponseDto;
 import com.jayesh.resourcePrj.entities.Asset;
 import com.jayesh.resourcePrj.entities.Employee;
@@ -155,5 +156,16 @@ public class TrackService {
             emailService.sendEmail(track.getEmployee().getEmail(),track.getExpectedReturnDate(),track.getAsset().getName());
             log.info("Email Sent to : {}", track.getEmployee().getEmail());
         }
+    }
+
+    public TrackAnalyticsResponse showAnalytics() {
+        long totalTracks = trackRepo.count();
+        long totalReturns = trackRepo.countTrackByIsReturned(true);
+        long totalAssigned = trackRepo.countTrackByIsReturned(false);
+        return TrackAnalyticsResponse.builder()
+                .totalAssigned(totalAssigned)
+                .totalReturns(totalReturns)
+                .totalTracks(totalTracks)
+                .build();
     }
 }
