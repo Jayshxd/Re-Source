@@ -1,3 +1,6 @@
 # Re:Source - easy asset managemnet
 
-## features
+## status : 
+
+[x] basic crud apis done
+[ ]working on frontend 
