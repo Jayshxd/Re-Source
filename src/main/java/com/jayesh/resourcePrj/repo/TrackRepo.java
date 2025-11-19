@@ -1,5 +1,6 @@
 package com.jayesh.resourcePrj.repo;
 
+import com.jayesh.resourcePrj.dto.response.EmployeeResponseDto;
 import com.jayesh.resourcePrj.dto.response.TrackResponseDto;
 import com.jayesh.resourcePrj.entities.Track;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -47,4 +48,8 @@ public interface TrackRepo extends JpaRepository<Track,Long> {
     List<Track> findTracksByExpectedReturnDateBeforeAndIsReturnedFalse(LocalDate now);
 
     long countTrackByIsReturned(Boolean isReturned);
+
+
+
+    Integer countTracksByEmployeeId(Long employeeId);
 }

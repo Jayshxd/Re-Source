@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/emps")
 public class EmployeeController {
     // Register and Login are in AuthController
@@ -21,7 +22,7 @@ public class EmployeeController {
     private final TrackService trackService;
 
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<EmployeeResponseDto>> findEmployees(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String email,
@@ -36,6 +37,12 @@ public class EmployeeController {
     @ResponseStatus(HttpStatus.OK)
     public List<TrackResponseDto> findTrackByEmpId(@PathVariable Long empId) {
         return trackService.findTracksByEmpId(empId);
+    }
+
+    @GetMapping("/count/{empId}/tracks")
+    @ResponseStatus(HttpStatus.OK)
+    public Integer findTrackByEmpIdCount(@PathVariable Long empId) {
+        return trackService.countEmps(empId);
     }
 
 
