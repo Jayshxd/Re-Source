@@ -15,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/assets")
+@CrossOrigin(origins = "*")
 public class AssetController {
     private final AssetService assetService;
     private final TrackService trackService;
