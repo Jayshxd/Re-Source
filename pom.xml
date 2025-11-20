@@ -70,6 +70,24 @@
             <artifactId>spring-boot-starter-mail</artifactId>
             <version>3.5.5</version>
         </dependency>
+        <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-api</artifactId>
+        <version>0.12.3</version> <!-- VERSION WAPAS ADD KAR DIYA HAI -->
+    </dependency>
+    <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-impl</artifactId>
+        <scope>runtime</scope>
+        <version>0.12.3</version> <!-- VERSION WAPAS ADD KAR DIYA HAI -->
+    </dependency>
+    <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-jackson</artifactId>
+        <scope>runtime</scope>
+        <version>0.12.3</version> <!-- VERSION WAPAS ADD KAR DIYA HAI -->
+    </dependency>
+
     </dependencies>
 
     <build>
