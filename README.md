@@ -189,7 +189,7 @@ Content-Type: application/json
 }
 ```
 
-#### Bulk Register Employees
+#### Bulk Register Employees 
 ```http
 POST /auth/bulk/register
 Content-Type: application/json
