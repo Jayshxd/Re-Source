@@ -538,7 +538,7 @@ The application includes an email notification service for important events:
 
 Contributions are welcome! Please follow these steps:
 
-1. **Fork the repository**
+1. **Fork the repository** 
 2. **Create a feature branch**
    ```bash
    git checkout -b feature/AmazingFeature
