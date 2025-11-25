@@ -176,7 +176,7 @@ Configure SMTP settings for email notifications:
 
 ### Authentication Endpoints
 
-#### Register Employee
+#### Register Employee 
 ```http
 POST /auth/register
 Content-Type: application/json
