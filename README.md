@@ -547,7 +547,7 @@ Contributions are welcome! Please follow these steps:
    ```bash
    git commit -m 'Add some AmazingFeature'
    ```
-4. **Push to the branch**
+4. **Push to the branch** 
    ```bash
    git push origin feature/AmazingFeature
    ```
