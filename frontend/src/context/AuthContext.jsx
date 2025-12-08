@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       const response = await authService.login(credentials);
-      const { token, username, message } = response.data;
+      const { token, username } = response.data;
       
       // Store token and create user object from username
       const userData = { username };
