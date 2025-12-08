@@ -5,7 +5,7 @@ import Input from '../../components/ui/Input';
 import Modal from '../../components/ui/Modal';
 import { useToast } from '../../components/ui/Toast';
 import { assetService } from '../../services';
-import { Plus, Search, Edit, Trash2, History } from 'lucide-react';
+import { Plus, Search, Edit, Trash2 } from 'lucide-react';
 import Spinner from '../../components/ui/Spinner';
 
 const Assets = () => {

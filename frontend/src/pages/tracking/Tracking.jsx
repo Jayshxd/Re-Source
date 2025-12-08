@@ -102,7 +102,9 @@ const Tracking = () => {
     }
     
     const expectedDate = new Date(track.expectedReturnDate);
+    expectedDate.setHours(0, 0, 0, 0);
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     
     if (expectedDate < today) {
       return (
