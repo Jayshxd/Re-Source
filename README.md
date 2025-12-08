@@ -86,6 +86,15 @@ This application enables organizations to:
 - **Spring DevTools**: Development-time features
 - **Scheduled Tasks**: Automated background jobs
 
+### Frontend
+- **React 18**: Modern React with hooks
+- **Vite**: Next-generation frontend tooling
+- **Tailwind CSS**: Utility-first CSS framework
+- **React Router**: Client-side routing
+- **Axios**: HTTP client for API requests
+- **Recharts**: Data visualization library
+- **Lucide React**: Icon library
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -139,7 +148,7 @@ Before running this application, ensure you have the following installed:
    mvnw.cmd clean install
    ```
 
-5. **Run the application**
+5. **Run the backend application**
    ```bash
    ./mvnw spring-boot:run
    ```
@@ -149,7 +158,40 @@ Before running this application, ensure you have the following installed:
    mvnw.cmd spring-boot:run
    ```
 
-The application will start on `http://localhost:8080`
+The backend application will start on `http://localhost:8080`
+
+### Running the Frontend
+
+1. **Navigate to the frontend directory**
+   ```bash
+   cd frontend
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables**
+   
+   Create a `.env` file (copy from `.env.example`):
+   ```
+   VITE_API_BASE_URL=http://localhost:8080
+   ```
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+The frontend application will start on `http://localhost:5173`
+
+For production build:
+```bash
+npm run build
+```
+
+See `/frontend/README.md` for detailed frontend documentation.
 
 ### Configuration
 
@@ -516,9 +558,12 @@ The application includes an email notification service for important events:
 - [x] Analytics and reporting
 - [x] Bulk operations support
 - [x] Advanced search functionality
+- [x] **Modern React Frontend** with Vite and Tailwind CSS
+- [x] **Responsive UI** with dark theme
+- [x] **Interactive Dashboard** with charts and analytics
+- [x] **Complete CRUD interfaces** for all entities
 
 ### 🚧 In Progress
-- [ ] Frontend development
 - [ ] Advanced analytics dashboard
 - [ ] Report generation (PDF/Excel)
 
