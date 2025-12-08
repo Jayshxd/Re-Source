@@ -21,7 +21,8 @@ export const AuthProvider = ({ children }) => {
     return storedToken && storedToken !== 'undefined' ? storedToken : null;
   });
   
-  const [loading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [loading, setLoading] = useState(false);
 
   const login = async (credentials) => {
     try {
