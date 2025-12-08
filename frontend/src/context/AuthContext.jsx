@@ -22,13 +22,16 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       const response = await authService.login(credentials);
-      const { token, employeeInfo } = response.data;
+      const { token, username } = response.data;
+      
+      // Store token and create user object from username
+      const userData = { username };
       
       localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(employeeInfo));
+      localStorage.setItem('user', JSON.stringify(userData));
       
       setToken(token);
-      setUser(employeeInfo);
+      setUser(userData);
       
       return { success: true };
     } catch (error) {
