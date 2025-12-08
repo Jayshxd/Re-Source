@@ -32,7 +32,7 @@ public class JwtUtil {
         String token = Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis()+1000*60*5))
+                .expiration(new Date(System.currentTimeMillis()+1000*60*15))
                 .signWith(getKey())
                 .compact();
         log.info("Generated JWT token: {}", token);

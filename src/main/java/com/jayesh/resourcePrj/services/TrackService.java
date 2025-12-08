@@ -163,10 +163,12 @@ public class TrackService {
         long totalTracks = trackRepo.count();
         long totalReturns = trackRepo.countTrackByIsReturned(true);
         long totalAssigned = trackRepo.countTrackByIsReturned(false);
+        long overdueAssets = trackRepo.countTrackByIsReturned(false);
         return TrackAnalyticsResponse.builder()
                 .totalAssigned(totalAssigned)
                 .totalReturns(totalReturns)
                 .totalTracks(totalTracks)
+                .overdueAssets(overdueAssets)
                 .build();
     }
 

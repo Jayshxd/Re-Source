@@ -35,7 +35,7 @@ public class AssetController {
     }
 
 
-    @GetMapping("/search")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<AssetResponseDto> findAssets(
             @RequestParam(required = false) String name,

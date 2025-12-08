@@ -11,5 +11,6 @@ public class TrackAnalyticsResponse {
     private long totalTracks;
     private long totalReturns;
     private long totalAssigned;
+    private long overdueAssets;
 
 }

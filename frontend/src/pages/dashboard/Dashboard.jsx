@@ -44,14 +44,14 @@ const Dashboard = () => {
     },
     {
       title: 'Active Assignments',
-      value: analytics?.activeAssignments || 0,
+      value: analytics?.totalAssigned || 0,
       icon: TrendingUp,
       color: 'text-green-500',
       bgColor: 'bg-green-500/10',
     },
     {
       title: 'Returned Assets',
-      value: analytics?.returnedAssets || 0,
+      value: analytics?.totalReturns || 0,
       icon: Users,
       color: 'text-purple-500',
       bgColor: 'bg-purple-500/10',
@@ -66,8 +66,8 @@ const Dashboard = () => {
   ];
 
   const pieData = [
-    { name: 'Active', value: analytics?.activeAssignments || 0 },
-    { name: 'Returned', value: analytics?.returnedAssets || 0 },
+    { name: 'Active', value: analytics?.totalAssigned || 0 },
+    { name: 'Returned', value: analytics?.totalReturns || 0 },
     { name: 'Overdue', value: analytics?.overdueAssets || 0 },
   ];
 
@@ -137,8 +137,8 @@ const Dashboard = () => {
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={[
                 { name: 'Total', value: analytics?.totalTracks || 0 },
-                { name: 'Active', value: analytics?.activeAssignments || 0 },
-                { name: 'Returned', value: analytics?.returnedAssets || 0 },
+                { name: 'Active', value: analytics?.totalAssigned || 0 },
+                { name: 'Returned', value: analytics?.totalReturns || 0 },
                 { name: 'Overdue', value: analytics?.overdueAssets || 0 },
               ]}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#334155" />

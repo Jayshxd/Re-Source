@@ -22,6 +22,9 @@ public class TrackResponseDto {
     private LocalTime issueTime;
     private LocalDate expectedReturnDate;
     private Boolean isReturned;
+    private Long employeeId;
+    private Long assetId;
+    private String assetCondition;
 
     public TrackResponseDto(Track track) {
         this.id = track.getId();
@@ -31,5 +34,8 @@ public class TrackResponseDto {
         this.issueTime = track.getIssueTime();
         this.expectedReturnDate = track.getExpectedReturnDate();
         this.isReturned = track.getIsReturned();
+        this.employeeId = track.getEmployee().getId();
+        this.assetId = track.getAsset().getId();
+        this.assetCondition = track.getAssetCondition();
     }
 }

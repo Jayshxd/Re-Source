@@ -92,7 +92,7 @@ const Tracking = () => {
   };
 
   const getStatusBadge = (track) => {
-    if (track.returned) {
+    if (track.isReturned) {
       return (
         <span className="flex items-center gap-1 px-2 py-1 bg-green-500/20 text-green-400 rounded text-sm">
           <CheckCircle size={14} />
@@ -100,20 +100,28 @@ const Tracking = () => {
         </span>
       );
     }
-    
-    const expectedDate = new Date(track.expectedReturnDate);
-    expectedDate.setHours(0, 0, 0, 0);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    if (expectedDate < today) {
-      return (
-        <span className="flex items-center gap-1 px-2 py-1 bg-red-500/20 text-red-400 rounded text-sm">
-          <XCircle size={14} />
-          Overdue
-        </span>
-      );
-    }
+
+      // 1. Sabse pehle check: Agar date NULL hai, toh kuch mat karo (Overdue nahi hai)
+      if (!track.expectedReturnDate) {
+          return null; // Ya return <span... status="Active/Returned" ...>
+      }
+
+// 2. Agar date hai, tabhi aage ka logic run karo
+      const expectedDate = new Date(track.expectedReturnDate);
+      expectedDate.setHours(0, 0, 0, 0);
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+// 3. Comparison
+      if (today > expectedDate) {
+          return (
+              <span className="flex items-center gap-1 px-2 py-1 bg-red-500/20 text-red-400 rounded text-sm">
+      <XCircle size={14} />
+      Overdue
+    </span>
+          );
+      }
     
     return (
       <span className="flex items-center gap-1 px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-sm">
@@ -169,8 +177,8 @@ const Tracking = () => {
                 ) : (
                   tracks.map((track) => (
                     <tr key={track.id} className="border-b border-dark-800 hover:bg-dark-800/50 transition-colors">
-                      <td className="py-3 px-4 text-slate-100">{track.asset?.name || 'N/A'}</td>
-                      <td className="py-3 px-4 text-slate-300">{track.employee?.name || 'N/A'}</td>
+                      <td className="py-3 px-4 text-slate-100">{track.assetName || 'N/A'}</td>
+                      <td className="py-3 px-4 text-slate-300">{track.employeeName || 'N/A'}</td>
                       <td className="py-3 px-4 text-slate-300">
                         {formatDateTime(track.issueDate, track.issueTime)}
                       </td>
@@ -179,7 +187,7 @@ const Tracking = () => {
                       <td className="py-3 px-4 text-slate-300">{track.assetCondition || 'N/A'}</td>
                       <td className="py-3 px-4">
                         <div className="flex items-center justify-end">
-                          {!track.returned && (
+                          {!track.isReturned && (
                             <Button
                               size="sm"
                               variant="secondary"

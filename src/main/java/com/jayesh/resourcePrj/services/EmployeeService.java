@@ -64,7 +64,7 @@ public class EmployeeService {
                 .username(request.getUsername())
                 .name(request.getName())
                 .email(request.getEmail())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .roles(Set.of(role))
                 .build();
     }
