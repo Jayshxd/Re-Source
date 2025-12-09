@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "https://re-source-xi.vercel.app/")
 public class AuthController {
 
     private final EmployeeService employeeService;
