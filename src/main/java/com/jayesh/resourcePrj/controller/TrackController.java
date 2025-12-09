@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/tracks")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://re-source-xi.vercel.app/")
 public class TrackController {
 
     private final TrackService trackService;

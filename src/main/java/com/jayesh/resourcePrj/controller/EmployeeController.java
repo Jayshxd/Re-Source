@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://re-source-xi.vercel.app/")
 @RequestMapping("/emps")
 public class EmployeeController {
     // Register and Login are in AuthController
