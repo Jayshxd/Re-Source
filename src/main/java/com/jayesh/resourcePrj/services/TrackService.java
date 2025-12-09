@@ -72,9 +72,9 @@ public class TrackService {
         employee.addTrack(track);
         asset.addTrack(track);
         log.info("Asset Assigned Successfully");
+        Track savedTrack = trackRepo.save(track);
         emailService.sendEmailWhenAssigned(employee.getEmail(),track);
         log.info("Assigned Email Sent to : {}", track.getEmployee().getEmail());
-        Track savedTrack = trackRepo.save(track);
         return new  TrackResponseDto(savedTrack);
     }
 
@@ -86,9 +86,10 @@ public class TrackService {
         track.setIsReturned(true);
         track.setExpectedReturnDate(null);
         log.info("Track Returned Successfully");
+        Track savedTrack = trackRepo.save(track);
         emailService.sendEmailWhenReturned(track.getEmployee().getEmail(),track);
         log.info("Returned Email Sent to : {}", track.getEmployee().getEmail());
-        Track savedTrack = trackRepo.save(track);
+
         return new TrackResponseDto(savedTrack);
     }
 

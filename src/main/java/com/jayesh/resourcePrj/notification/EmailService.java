@@ -5,6 +5,7 @@ import com.jayesh.resourcePrj.entities.Track;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
 
+    @Async
     public void sendEmail(String to, LocalDate returnDate,String assetName) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
@@ -33,6 +35,7 @@ public class EmailService {
         mailSender.send(message);
     }
 
+    @Async
     public void sendEmailWhenAssigned(String to, Track track) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
@@ -52,6 +55,7 @@ public class EmailService {
     }
 
 
+    @Async
     public void sendEmailWhenReturned(String to, Track track) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
