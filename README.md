@@ -1,5 +1,6 @@
 # Re-Source - Easy Asset Management System
-[![View The Application](https://re-source-git-main-jayeshs-projects-795bb464.vercel.app/login)]
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)](https://re-source-xi.vercel.app/register)
+
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.7-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://www.oracle.com/java/)
