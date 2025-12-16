@@ -80,7 +80,7 @@ This application enables organizations to:
 ### Security & Authentication
 - **JWT (JSON Web Tokens)**: Token-based authentication
 - **JJWT 0.12.3**: JWT implementation library
-- **BCrypt**: Password encryption
+- **BCrypt**: Password encryption.
 
 ### Additional Features
 - **Hibernate**: ORM framework with MySQL dialect
