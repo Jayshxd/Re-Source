@@ -91,6 +91,7 @@
     </dependencies>
 
     <build>
+        <finalName>resource-jar</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
