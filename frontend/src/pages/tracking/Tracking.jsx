@@ -37,11 +37,11 @@ const Tracking = () => {
     try {
       const [tracksRes, assetsRes, employeesRes] = await Promise.all([
         trackService.search({}),
-        assetService.getAll(),
+        assetService.getAll(0,100),
         employeeService.getAll(),
       ]);
       setTracks(tracksRes.data);
-      setAssets(assetsRes.data);
+      setAssets(assetsRes.data.content);
       setEmployees(employeesRes.data);
     } catch (error) {
       toast.error('Failed to load data');

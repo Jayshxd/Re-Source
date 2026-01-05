@@ -57,7 +57,7 @@ public class TrackService {
         System.out.println("Latest Returned Record for asset " + asset.getId() + " : " + check);
             if(check!=null){
                 String cond = check.getAssetCondition();
-                if(cond!=null && cond.toLowerCase().contains("not good")) {
+                if(cond!=null && cond.contains("Damaged")) {
                     log.error("The Condition of : {}, Is Not Good !!!", asset.getName());
                     throw new BadCredentialsException("The Condition Of : " + asset.getName() + " , Is Not Good !!!");
                 }
@@ -161,14 +161,26 @@ public class TrackService {
     }
 
     public TrackAnalyticsResponse showAnalytics() {
-        long totalTracks = trackRepo.count();
-        long totalReturns = trackRepo.countTrackByIsReturned(true);
+        // 1. FIX: Count the ASSET table (Inventory), not the Track table
+        // This will give you the 100,000 number you are looking for.
+        long totalInventory = assetRepo.count();
+
+        // 2. Existing logic for assignments (Active)
         long totalAssigned = trackRepo.countTrackByIsReturned(false);
-        long overdueAssets = trackRepo.countTrackByIsReturned(false);
+
+        // 3. Existing logic for returns (History)
+        long totalReturns = trackRepo.countTrackByIsReturned(true);
+
+        // 4. FIX: Overdue logic
+        // Previous code was just duplicating 'totalAssigned'.
+        // We need to count items that are NOT returned AND date is before today.
+        // If you don't have this count method in Repo yet, use the list size (slower) or add the count method.
+        // For now, let's use the safer List approach based on your existing 'overDues' method:
+        long overdueAssets = trackRepo.countByExpectedReturnDateBeforeAndIsReturnedFalse(LocalDate.now());
         return TrackAnalyticsResponse.builder()
                 .totalAssigned(totalAssigned)
                 .totalReturns(totalReturns)
-                .totalTracks(totalTracks)
+                .totalTracks(totalInventory) // <--- Map asset count here
                 .overdueAssets(overdueAssets)
                 .build();
     }

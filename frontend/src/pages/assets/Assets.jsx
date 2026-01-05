@@ -17,31 +17,40 @@ const Assets = () => {
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [formData, setFormData] = useState({ name: '', serialNumber: '', assetType: '' });
   const toast = useToast();
+    const [currentPage, setCurrentPage] = useState(0); // Track which page we are on
+    const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    fetchAssets();
+    fetchAssets(1);
   }, []);
 
-  const fetchAssets = async () => {
-    try {
-      const response = await assetService.getAll();
-      setAssets(response.data);
-    } catch (error) {
-      toast.error('Failed to load assets');
-    } finally {
-      setLoading(false);
-    }
-  };
+// CHANGE: Accept page number
+    const fetchAssets = async (page = 1) => {
+        try {
+            setLoading(true);
+            // CHANGE: Pass page and size (20) to your service
+            // Ensure your assetService.getAll accepts these params!
+            const response = await assetService.getAll(page, 50);
+
+            setAssets(response.data.content);
+            setTotalPages(response.data.totalPages); // CHANGE: Save total pages
+            setCurrentPage(page); // CHANGE: Update current page state
+        } catch (error) {
+            toast.error('Failed to load assets');
+        } finally {
+            setLoading(false);
+        }
+    };
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
       fetchAssets();
       return;
     }
-    
+
     try {
       const response = await assetService.search({ name: searchQuery });
-      setAssets(response.data);
+      setAssets(response.data.content);
     } catch (error) {
       toast.error('Search failed');
     }
@@ -76,7 +85,7 @@ const Assets = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this asset?')) return;
-    
+
     try {
       await assetService.delete(id);
       toast.success('Asset deleted successfully');
@@ -150,46 +159,70 @@ const Assets = () => {
                   <th className="text-right py-3 px-4 text-sm font-semibold text-slate-300">Actions</th>
                 </tr>
               </thead>
-              <tbody>
-                {filteredAssets.length === 0 ? (
-                  <tr>
-                    <td colSpan="4" className="text-center py-8 text-slate-400">
-                      No assets found
-                    </td>
-                  </tr>
+                <tbody>
+                {assets.length === 0 ? (  // CHANGE: Use 'assets', not 'filteredAssets'
+                    <tr>
+                        <td colSpan="4" className="text-center py-8 text-slate-400">
+                            No assets found
+                        </td>
+                    </tr>
                 ) : (
-                  filteredAssets.map((asset) => (
-                    <tr key={asset.id} className="border-b border-dark-800 hover:bg-dark-800/50 transition-colors">
-                      <td className="py-3 px-4 text-slate-100">{asset.name}</td>
-                      <td className="py-3 px-4 text-slate-300">{asset.serialNumber}</td>
-                      <td className="py-3 px-4">
+                    assets.map((asset) => ( // CHANGE: Use 'assets'
+                        <tr key={asset.id} className="border-b border-dark-800 hover:bg-dark-800/50 transition-colors">
+                            <td className="py-3 px-4 text-slate-100">{asset.name}</td>
+                            <td className="py-3 px-4 text-slate-300">{asset.serialNumber}</td>
+                            <td className="py-3 px-4">
                         <span className="px-2 py-1 bg-primary-500/20 text-primary-400 rounded text-sm">
                           {asset.assetType}
                         </span>
-                      </td>
-                      <td className="py-3 px-4">
-                        <div className="flex items-center justify-end gap-2">
-                          <button
-                            onClick={() => openEditModal(asset)}
-                            className="p-2 text-blue-400 hover:bg-blue-500/10 rounded transition-colors"
-                            title="Edit"
-                          >
-                            <Edit size={18} />
-                          </button>
-                          <button
-                            onClick={() => handleDelete(asset.id)}
-                            className="p-2 text-red-400 hover:bg-red-500/10 rounded transition-colors"
-                            title="Delete"
-                          >
-                            <Trash2 size={18} />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
+                            </td>
+                            <td className="py-3 px-4">
+                                <div className="flex items-center justify-end gap-2">
+                                    <button
+                                        onClick={() => openEditModal(asset)}
+                                        className="p-2 text-blue-400 hover:bg-blue-500/10 rounded transition-colors"
+                                        title="Edit"
+                                    >
+                                        <Edit size={18} />
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(asset.id)}
+                                        className="p-2 text-red-400 hover:bg-red-500/10 rounded transition-colors"
+                                        title="Delete"
+                                    >
+                                        <Trash2 size={18} />
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    ))
                 )}
-              </tbody>
+                </tbody>
             </table>
+
+              {/* CHANGE: ADD PAGINATION CONTROLS HERE */}
+              <div className="flex items-center justify-between px-4 py-4 border-t border-dark-800">
+                <span className="text-sm text-slate-400">
+                    Page {currentPage + 1} of {totalPages}
+                </span>
+                  <div className="flex gap-2">
+                      <Button
+                          variant="secondary"
+                          onClick={() => fetchAssets(currentPage - 1)}
+                          disabled={currentPage === 0}
+                      >
+                          Previous
+                      </Button>
+                      <Button
+                          variant="secondary"
+                          onClick={() => fetchAssets(currentPage + 1)}
+                          disabled={currentPage >= totalPages - 1}
+                      >
+                          Next
+                      </Button>
+                  </div>
+              </div>
+
           </div>
         </CardContent>
       </Card>

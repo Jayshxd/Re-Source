@@ -1,5 +1,6 @@
 package com.jayesh.resourcePrj.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +22,12 @@ import java.util.List;
 public class Asset {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen")
+            @SequenceGenerator(
+                    name = "seq_gen",
+                    allocationSize = 500,
+                    sequenceName = "asset_seq"
+            )
     Long id;
 
     @Column(nullable = false)
@@ -40,6 +46,7 @@ public class Asset {
     private Timestamp updatedAt;
 
 
+    @JsonIgnore
     @OneToMany(
             mappedBy = "asset",
             cascade = CascadeType.ALL

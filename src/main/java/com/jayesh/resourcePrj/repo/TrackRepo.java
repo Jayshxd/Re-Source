@@ -49,7 +49,8 @@ public interface TrackRepo extends JpaRepository<Track,Long> {
 
     long countTrackByIsReturned(Boolean isReturned);
 
-
+    // Add this line
+    long countByExpectedReturnDateBeforeAndIsReturnedFalse(LocalDate date);
 
     Integer countTracksByEmployeeId(Long employeeId);
 }
