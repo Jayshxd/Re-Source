@@ -22,12 +22,14 @@ import java.util.List;
 public class Asset {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen")
-            @SequenceGenerator(
-                    name = "seq_gen",
-                    allocationSize = 500,
-                    sequenceName = "asset_seq"
-            )
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen")
+//            @SequenceGenerator(
+//                    name = "seq_gen",
+//                    allocationSize = 500,
+//                    sequenceName = "asset_seq"
+//            )
+            @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     Long id;
 
     @Column(nullable = false)
